@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Contact Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 15px;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+      color: #444;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0,123,255,0.4);
+    }
+
+    textarea {
+      resize: none;
+      min-height: 100px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .success {
+      margin-top: 10px;
+      color: green;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Contact Us</h2>
+    <form id="contactForm" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name">
+      <div class="error" id="nameError">Name is required.</div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="e.g. 123@gmail.com">
+      <div class="error" id="emailError">Enter a valid email.</div>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="Enter subject">
+      <div class="error" id="subjectError">Subject is required.</div>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Write your message..."></textarea>
+      <div class="error" id="messageError">Message is required.</div>
+
+      <button type="submit">Send Message</button>
+      <div class="success">✅ Your message has been sent!</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("contactForm");
+    const successMsg = document.querySelector(".success");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      document.querySelectorAll(".error").forEach(el => el.style.display = "none");
+
+      let valid = true;
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (name === "") {
+        document.getElementById("nameError").style.display = "block";
+        valid = false;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").style.display = "block";
+        valid = false;
+      }
+
+      if (subject === "") {
+        document.getElementById("subjectError").style.display = "block";
+        valid = false;
+      }
+
+      if (message === "") {
+        document.getElementById("messageError").style.display = "block";
+        valid = false;
+      }
+
+      if (valid) {
+        successMsg.style.display = "block";
+        form.reset();
+      } else {
+        successMsg.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
